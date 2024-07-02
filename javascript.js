@@ -18,8 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const selection = document.querySelector('.choices');
 
 
-    const roundResult = document.querySelector('.round');
+    let roundResult = document.querySelector('.round');
     const finalResult = document.querySelector('.finalresult');
+
+    const resetBtn = document.querySelector('.reset');
+    let gameOver = false;
 
 
     let humanScore = 0;
@@ -31,62 +34,71 @@ document.addEventListener('DOMContentLoaded', () => {
         return choice;
     }
 
-    function playGame() {
+    function playRound(humanChoice, computerChoice) {
+        if (gameOver) {
+            return;
+        }
 
-        function playRound(humanChoice, computerChoice) {
-            humanChoice = humanChoice.toLowerCase();
-            let result = "";
+        humanChoice = humanChoice.toLowerCase();
+        let result = "";
 
-            if (humanChoice === computerChoice) {
-                result = "You tied!";
-            } else if (
-                (humanChoice === "rock" && computerChoice === "scissors") ||
-                (humanChoice === "paper" && computerChoice === "rock") ||
-                (humanChoice === "scissors" && computerChoice === "paper")
-            ) {
-                result = `You win! ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice}!`;
-                humanScore++;
-            } else {
-                result = `You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice}!`;
-                computerScore++;
-            }
-
+        if (humanChoice === computerChoice) {
+            result = "You tied!";
+        } else if (
+            (humanChoice === "rock" && computerChoice === "scissors") ||
+            (humanChoice === "paper" && computerChoice === "rock") ||
+            (humanChoice === "scissors" && computerChoice === "paper")
+        ) {
+            result = `You win! ${humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)} beats ${computerChoice}!`;
+            humanScore++;
+        } else {
+            result = `You lose! ${computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)} beats ${humanChoice}!`;
+            computerScore++;
+        }
             roundResult.textContent = result;
             roundCount++;
-            }
-            if (roundCount >= 5) {
-                if (humanScore > computerScore) {
-                    finalResult.textContent = "You win! Your score was " + humanScore + " and the computer score was " + computerScore + ".";
-                }
-                
-                if (humanScore < computerScore) {
-                    finalResult.textContent = "You lose. Your score was " + humanScore + " and the computer score was " + computerScore + ".";
-                }
-                
-                if (humanScore === computerScore) {
-                    finalResult.textContent = "You tied. Your score was " + humanScore + " and the computer score was " + computerScore + ".";
-                }
 
-                humanScore = 0;
-                computerScore = 0;
-                roundCount = 0;
+        if (roundCount >= 5) {
+            if (humanScore > computerScore) {
+                finalResult.textContent = "You win! Your score was " + humanScore + " and the computer score was " + computerScore + ".";
             }
+            
+            if (humanScore < computerScore) {
+                finalResult.textContent = "You lose. Your score was " + humanScore + " and the computer score was " + computerScore + ".";
+            }
+            
+            if (humanScore === computerScore) {
+                finalResult.textContent = "You tied. Your score was " + humanScore + " and the computer score was " + computerScore + ".";
+            }
+            roundResult.textContent = '';
+            gameOver = true;
         }
+    }
+
+    function resetGame() {
+        humanScore = 0;
+        computerScore = 0;
+        roundCount = 0;
+
+        roundResult.textContent = '';
+        finalResult.textContent = '';
+        
+        gameOver = false;
+    }
 
     selection.addEventListener('click', (event) => {
         let target = event.target;
 
-        switch(target.id) {
-            case 'rock':
-                playRound('rock', getComputerChoice());
-                break;
-            case 'paper':
-                playRound('paper', getComputerChoice());
-                break;
-            case 'scissors':
-                playRound('scissors', getComputerChoice());
-                break;
+        if (target.classList.contains('rock')) {
+            playRound('rock', getComputerChoice());
+        } else if (target.classList.contains('paper')) {
+            playRound('paper', getComputerChoice());
+        } else if (target.classList.contains('scissors')) {
+            playRound('scissors', getComputerChoice());
         }
     });
-    playGame();
+
+    resetBtn.addEventListener('click', () => {
+        resetGame();
+    });
 });
