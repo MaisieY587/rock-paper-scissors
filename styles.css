@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.subtitle {
+    display: flex;
+    margin-bottom: 60px;
+    padding: 0px;
+}
+
+.choices {
+    display: flex;
+    justify-content:space-around;
+    margin-bottom: 300px;
+    gap: 20px;
+}
+
+.rock, .paper, .scissors {
+    width: auto;
+    padding: 30px 60px;
+    text-align: center;
+}
+
+.rock {
+    background-color: gray;
+}
+
+.paper {
+    background-color: white;
+}
+
+.scissors {
+    background-color: lightcoral;
+}
+
+
+button {
+    border-radius: 1%;
+}
+
+.round {
+    display: flex;
+    justify-content: center;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 40px;
+    align-items: center;
+    height: 100px;
+}
+
+.reset {
+    display:flex;
+    justify-content:center;
+    width: 100px;
+    padding: 20px 40px;
+    
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.finalresult {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 50px;
+    color: white;
+    padding: 20px 50px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
